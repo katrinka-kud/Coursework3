@@ -41,31 +41,30 @@ def get_last_value(data, last_value):
 
 def hide_sender_number(data):
     """Скрывает цифры из номера счета отправителя"""
-    for i in data:
-        part_first_word = i['from'].split(' ')[0]  # получаем первое слово из значения 'from'
-        part_second_word = i['from'].split(' ')[1]  # получаем второе слово из значения 'from'
-        if part_second_word.isalpha():
-            part_first_word = f'{part_first_word}{part_second_word}'
-            part_second_word1 = list(i['from'].split(' ')[-1])[
-                                0:4]  # получаем первые 4 знака из третьего слова из значения 'from'
-            part_second_word2 = list(i['from'].split(' ')[-1])[
-                                4:6]  # получаем вторые 2 знака из третьего слова из значения 'from'
-            part_second_word3 = list(i['from'].split(' ')[-1])[
-                                -4:]  # получаем последние 4 знака из третьего слова из значения 'from'
-        elif part_second_word.isdigit():
-            part_second_word1 = list(i['from'].split(' ')[1])[
-                                0:4]  # получаем первые 4 знака из третьего слова из значения 'from'
-            part_second_word2 = list(i['from'].split(' ')[1])[
-                                4:6]  # получаем вторые 2 знака из третьего слова из значения 'from'
-            part_second_word3 = list(i['from'].split(' ')[1])[
-                                -4:]  # получаем последние 4 знака из третьего слова из значения 'from'
-        a = f"{part_first_word} {''.join(part_second_word1)} {''.join(part_second_word2)}** **** {''.join(part_second_word3)}"
-        return a
+    part_first_word = data['from'].split(' ')[0]  # получаем первое слово из значения 'from'
+    part_second_word = data['from'].split(' ')[1]  # получаем второе слово из значения 'from'
+    if part_second_word.isalpha():
+        part_first_word = f'{part_first_word} {part_second_word}'
+        part_second_word1 = list(data['from'].split(' ')[-1])[
+                            0:4]  # получаем первые 4 знака из третьего слова из значения 'from'
+        part_second_word2 = list(data['from'].split(' ')[-1])[
+                            4:6]  # получаем вторые 2 знака из третьего слова из значения 'from'
+        part_second_word3 = list(data['from'].split(' ')[-1])[
+                            -4:]  # получаем последние 4 знака из третьего слова из значения 'from'
+    elif part_second_word.isdigit():
+        part_second_word1 = list(data['from'].split(' ')[1])[
+                            0:4]  # получаем первые 4 знака из третьего слова из значения 'from'
+        part_second_word2 = list(data['from'].split(' ')[1])[
+                            4:6]  # получаем вторые 2 знака из третьего слова из значения 'from'
+        part_second_word3 = list(data['from'].split(' ')[1])[
+                            -4:]  # получаем последние 4 знака из третьего слова из значения 'from'
+    a = f"{part_first_word} {''.join(part_second_word1)} {''.join(part_second_word2)}** **** {''.join(part_second_word3)}"
+    return a
 
 
 def hide_recipient_number(data):
     """Скрывает цифры из номера счета получателя"""
-    hide_part = data[0]['to']  # получаем первое слово из значения 'to'
+    hide_part = data['to']  # получаем первое слово из значения 'to'
     hide_part_first_word = hide_part.split(' ')[
         0]  # получаем последние 4 знака из второго слова из значения 'to'
     hide_part_second_word = list(hide_part.split(' ')[1])[

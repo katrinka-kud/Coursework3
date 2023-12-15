@@ -54,9 +54,28 @@ def data():
         }]
     return data
 
+@pytest.fixture
+def data2():
+    data2 = {
+            "id": 441945886,
+            "state": "EXECUTED",
+            "date": "2019-08-26T10:50:58.294041",
+            "operationAmount": {
+                "amount": "31957.58",
+                "currency": {
+                    "name": "руб.",
+                    "code": "RUB"
+                }
+            },
+            "description": "Перевод организации",
+            "from": "Maestro 1596837868705199",
+            "to": "Счет 64686473678894779589"
+        }
+    return data2
 
-# def tests_load_data():
-#     assert len(OPERATIONS_PATH) == 101
+
+def tests_load_data():
+    assert len(OPERATIONS_PATH) == 15
 
 
 def tests_get_converted_date(data):
@@ -71,9 +90,9 @@ def tests_get_last_value(data):
     assert len(get_last_value(data, 2)) == 2
 
 
-def tests_hide_sender_number(data):
-    assert hide_sender_number(data) == 'Maestro 1596 83** **** 5199'
+def tests_hide_sender_number(data2):
+    assert hide_sender_number(data2) == 'Maestro 1596 83** **** 5199'
 
 
-def tests_recipient_number(data):
-    assert hide_recipient_number(data) == 'Счет **9589'
+def tests_recipient_number(data2):
+    assert hide_recipient_number(data2) == 'Счет **9589'

@@ -9,8 +9,8 @@ def main():
     for i in last_five_transactions:
         date = get_converted_date(i['date'])  # получаем дату операции из транзакции
         operation = i['description']  # получаем описание операции из транзакции
-        card_number_sender = hide_sender_number(last_five_transactions)  # получаем номер счета отправителя
-        card_number_recipient = hide_recipient_number(last_five_transactions)  # получаем номер счета получателя
+        card_number_sender = hide_sender_number(i)  # получаем номер счета отправителя
+        card_number_recipient = hide_recipient_number(i)  # получаем номер счета получателя
         print(date, operation)
         print(f"{card_number_sender} -> {card_number_recipient}")
         print(f"{i['operationAmount']['amount']} {i['operationAmount']['currency']['name']}\n")
