@@ -1,23 +1,19 @@
-import datetime
+from datetime import datetime
 import json
 
 
-# import utils
-
-
-def load_data(filename):
-    """Получает данные из списка json-файла в формате списка словарей.
-    :param filename: имя файла.
-    :return: список словарей."""
-    with open(filename, 'r') as f:
-        return json.load(f)
+def load_data(filename: str) -> list[dict]:
+    """Получает данные из списка json-файла в формате списка словарей."""
+    with open(filename, 'r', encoding='utf-8') as file:
+        return json.load(file)
 
 
 def get_converted_date(data, a="%Y-%m-%dT%H:%M:%S.%f"):
     """Получает дату в нужном формате ДД.ММ.ГГГГ.
-    :param data: дата.
-    :param a: формат даты."""
-    return datetime.datetime.strptime(data, a).strftime("%d.%m.%Y")
+    :param data: Данные.
+    :param a: Дата.
+    :return: Дата в нужном формате ДД.ММ.ГГГГ."""
+    return datetime.strptime(data, a).strftime('%d.%m.%Y')
 
 
 def get_executed_transactions(data):
@@ -36,15 +32,9 @@ def get_executed_transactions(data):
 
 
 def get_last_value(data, last_value):
-    """Получает последнее значение из списка.
-    :param data: список.
-    :param last_value: последнее значение.
-    :return: последнее значение."""
-    return data[:last_value]
-
-
-def hide_part_number_from(data, last_value):
-    """Скрывает цифры из номера счета отправителя"""
+    """Получает список последних транзакций
+    :param data: Список.
+    :param last_value: Количество транзакций."""
     data = sorted(data, key=lambda x: x['date'], reverse=True)
     return data[:last_value]
 
@@ -69,7 +59,7 @@ def hide_sender_number(data):
                                 4:6]  # получаем вторые 2 знака из третьего слова из значения 'from'
             part_second_word3 = list(i['from'].split(' ')[1])[
                                 -4:]  # получаем последние 4 знака из третьего слова из значения 'from'
-        a = f"{part_first_word} {''.join(part_second_word1)} {''.join(part_second_word2)} {''.join(part_second_word3)}"
+        a = f"{part_first_word} {''.join(part_second_word1)} {''.join(part_second_word2)}** **** {''.join(part_second_word3)}"
         return a
 
 

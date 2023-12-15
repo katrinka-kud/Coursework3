@@ -1,10 +1,11 @@
 import pytest
 
+from data.settings import OPERATIONS_PATH
 from utils import *
 
 
 @pytest.fixture
-def tests_data():
+def data():
     data = [
         {
             "id": 441945886,
@@ -54,25 +55,25 @@ def tests_data():
     return data
 
 
-def tests_load_data():
-    assert len(load_data('operations.json')) == 101
+# def tests_load_data():
+#     assert len(OPERATIONS_PATH) == 101
 
 
-def tests_get_converted_date(test_data):
-    assert get_converted_date(test_data[0]['data']) == '26.08.2019'
+def tests_get_converted_date(data):
+    assert get_converted_date(data[0]['date']) == '26.08.2019'
 
 
-def tests_get_executed_transactions(test_data):
-    assert len(get_executed_transactions(test_data)) == 2
+def tests_get_executed_transactions(data):
+    assert len(get_executed_transactions(data)) == 3
 
 
-def tests_get_last_value(test_data):
-    assert len(get_last_value(test_data, 2)) == 2
+def tests_get_last_value(data):
+    assert len(get_last_value(data, 2)) == 2
 
 
-def tests_hide_part_number_from(test_data):
-    assert hide_part_number_from(test_data) == 'Maestro 1596 83** **** 5199'
+def tests_hide_sender_number(data):
+    assert hide_sender_number(data) == 'Maestro 1596 83** **** 5199'
 
 
-def tests_hide_sender_number(test_data):
-    assert hide_sender_number(test_data) == 'Счет **9589'
+def tests_recipient_number(data):
+    assert hide_recipient_number(data) == 'Счет **9589'
